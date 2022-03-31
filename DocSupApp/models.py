@@ -23,3 +23,31 @@ class proveedor(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+class det_fact(models.Model):
+    id_supplier=models.CharField(max_length=10)
+    name_supplier=models.CharField(max_length=70)
+    id_supplier_invoice=models.CharField(max_length=50)
+    date_Invoice=models.DateTimeField()
+    zPaymentMethod=models.CharField(max_length=40)
+    idItem=models.CharField(max_length=10)
+    item_description=models.CharField(max_length=100)
+    zSupplierName=models.CharField(max_length=50)
+    zSupplierID=models.CharField(max_length=10)
+    Business_transaction_document_id=models.CharField(max_length=30)
+    net_amount=models.CharField(max_length=20)
+    tax_amount=models.CharField(max_length=20)
+    gross_amount=models.CharField(max_length=20)
+    percent_RTE=models.CharField(max_length=20)
+    percent_IVA=models.CharField(max_length=20)
+    percent_ICA=models.CharField(max_length=20)
+    amount_RTE=models.CharField(max_length=20)
+    amount_IVA=models.CharField(max_length=20)
+    amount_ICA=models.CharField(max_length=20)
+    Value_RTE=models.CharField(max_length=20)
+    total_retenciones=models.CharField(max_length=20)
+
+    def get_abosulte_url(self):
+        return "/det_fact"
+    
+    def __str__(self):
+        return f"{self.name}"
