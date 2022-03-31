@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+    <div>
+        <h2>Proveedores</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vendor in proveedor_list %}
+                <tr>
+                    <td>{{ vendor.id_supplier }}</td>
+                    <td> {{vendor.name}} </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+    </div>
+
+    
+    
+
+
+
+{% endblock %}
