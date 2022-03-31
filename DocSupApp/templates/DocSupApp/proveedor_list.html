@@ -2,12 +2,15 @@
 
 {% load static %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Proveedores{% endblock %}
 
 {% block content %}
 
     <div>
         <h2>Proveedores</h2>
+        <div>
+            <a href="{% url 'Vendor_create' %}" style="display: inherit; text-align: center; border-radius: 15px; text-decoration: none; color: inherit; padding: 4px; background-color: lightgreen;">➕</a>
+        </div> 
         <table>
             <thead>
                 <tr>
@@ -19,17 +22,15 @@
                 {% for vendor in proveedor_list %}
                 <tr>
                     <td>{{ vendor.id_supplier }}</td>
+                    <td></td>
                     <td> {{vendor.name}} </td>
+                    <td><a href="{% url 'Vendor_Update' vendor.id_supplier %}">Editar</a> </td>
                 </tr>
                 {% endfor %}
             </tbody>
             
         </table>
     </div>
-
-    
-    
-
 
 
 {% endblock %}

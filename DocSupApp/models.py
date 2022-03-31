@@ -31,7 +31,7 @@ class det_fact(models.Model):
     zPaymentMethod=models.CharField(max_length=40)
     idItem=models.CharField(max_length=10)
     item_description=models.CharField(max_length=100)
-    zSupplierName=models.CharField(max_length=50)
+    zSupplierName=models.CharField(max_length=100)
     zSupplierID=models.CharField(max_length=10)
     Business_transaction_document_id=models.CharField(max_length=30)
     net_amount=models.CharField(max_length=20)
