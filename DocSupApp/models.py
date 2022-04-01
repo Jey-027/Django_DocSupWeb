@@ -23,17 +23,19 @@ class proveedor(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-class det_fact(models.Model):
-    id_supplier=models.CharField(max_length=10)
-    name_supplier=models.CharField(max_length=70)
-    id_supplier_invoice=models.CharField(max_length=50)
+
+class detalle_fact_2(models.Model):
+    id=models.AutoField(primary_key=True) 
+    supplier_id=models.CharField(max_length=10)
+    name_supplier=models.CharField(max_length=100)
+    id_supplier_invoice=models.CharField(max_length=55)
     date_Invoice=models.DateTimeField()
-    zPaymentMethod=models.CharField(max_length=40)
-    idItem=models.CharField(max_length=10)
+    zPaymentMethod=models.CharField(max_length=55)
+    idItem=models.CharField(max_length=40)
     item_description=models.CharField(max_length=100)
     zSupplierName=models.CharField(max_length=100)
-    zSupplierID=models.CharField(max_length=10)
-    Business_transaction_document_id=models.CharField(max_length=30)
+    zSupplierID=models.CharField(max_length=20)
+    Business_transaction_document_id=models.CharField(max_length=100)
     net_amount=models.CharField(max_length=20)
     tax_amount=models.CharField(max_length=20)
     gross_amount=models.CharField(max_length=20)
@@ -43,11 +45,14 @@ class det_fact(models.Model):
     amount_RTE=models.CharField(max_length=20)
     amount_IVA=models.CharField(max_length=20)
     amount_ICA=models.CharField(max_length=20)
-    Value_RTE=models.CharField(max_length=20)
-    total_retenciones=models.CharField(max_length=20)
+    Value_RTE=models.CharField(max_length=30)
+    total_retenciones=models.CharField(max_length=30)
+    status=models.IntegerField(default=0, null=True)  
+    Date_process=models.DateTimeField(null=True)
+    user_process=models.CharField(max_length=10, null=True)
 
     def get_abosulte_url(self):
-        return "/det_fact"
+        return "/detalle_fact_2"
     
     def __str__(self):
         return f"{self.name}"

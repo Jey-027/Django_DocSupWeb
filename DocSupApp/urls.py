@@ -8,5 +8,6 @@ urlpatterns = [
     path('vendor/list', views.vendorList.as_view(), name="vendorList"),
     path('vendor/create', views.VendorCreate.as_view(), name="Vendor_create"),
     path('vendor/update/<pk>', views.VendorUpdate.as_view(), name="Vendor_Update"),
+    path('facturas/list', views.DetFactList.as_view(), name="Detalle_facturacion"),
 ]
 
