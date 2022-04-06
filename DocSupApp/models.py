@@ -58,7 +58,7 @@ class documento(models.Model):
     amount_ICA = models.CharField(max_length=20)
     Value_RTE = models.CharField(max_length=30)
     total_retenciones = models.CharField(max_length=30)
-    status = models.IntegerField(default=0, null=True)  
+    status = models.IntegerField(default=1, null=True)  
     Date_process = models.DateTimeField(null=True)
     user_process = models.CharField(max_length=10, null=True)
 
