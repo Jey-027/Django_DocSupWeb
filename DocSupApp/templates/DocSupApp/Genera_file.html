@@ -1,12 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Genera Documento{% endblock %}
+
+
+{% block content %}
+
+    <div>
+        <h1>esto es una prueba</h1>
+        <form method="post">
+            <div>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Send">
+                
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

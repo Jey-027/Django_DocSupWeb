@@ -11,23 +11,25 @@
     <table>
         <thead>
             <tr>
-                <th>supplier Id </th>
+                <th>Fecha</th>
+                <th></th>
                 <th>Nombre</th>
                 <th>COFP</th>
-                <th>Fecha</th>
+                <th></th><th></th>
                 <th>Valor</th>
-                <th>Status</th>
+
             </tr>
         </thead>
         <tbody>
-            {% for fact in detalle_fact_2_list %}
+            {% for fact in documento_list %}
             <tr>
-                <td>{{ fact.supplier_id }}</td>
-                <td>{{ fact.name_supplier }}</td>
-                <td>{{ fact.id_supplier_invoice }}</td>
                 <td>{{ fact.date_invoice }}</td>
+                <td></td>
+                <td>{{ fact.name_supplier_vendor }}</td>
+                <td>{{ fact.id_supplier_invoice }}</td>
+                <td></td><td></td><td></td>
                 <td>{{ fact.net_amount }}</td>
-                <td>{{ fact.status }}</td>
+                <td><a href="{% url 'Genera_file' fact.id %}">Generar Documento</a></td>
             </tr>
             {% endfor %}
         </tbody>

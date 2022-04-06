@@ -9,5 +9,6 @@ urlpatterns = [
     path('vendor/create', views.VendorCreate.as_view(), name="Vendor_create"),
     path('vendor/update/<pk>', views.VendorUpdate.as_view(), name="Vendor_Update"),
     path('facturas/list', views.DetFactList.as_view(), name="Detalle_facturacion"),
+    path('facturas/generar/<pk>', views.DetFactUpdate.as_view(), name="Genera_file"),
 ]
 
