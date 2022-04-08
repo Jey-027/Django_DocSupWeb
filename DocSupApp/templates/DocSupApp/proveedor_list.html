@@ -8,10 +8,27 @@
 
     <div>
         <h2>Proveedores</h2>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 search">
+                    <form method="get">
+                        <div id="custom-search-input">
+                            <div class="input-group col-md-12">
+                                <input type="text" name="buscar" class="form-control" placeholder="Buscar...">
+                                <span class="input-group-list"></span>
+                                <button type="submit" class="boton btn-success">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div>
             <a href="{% url 'Vendor_create' %}" style="display: inherit; text-align: center; border-radius: 15px; text-decoration: none; color: inherit; padding: 4px; background-color: lightgreen;">➕</a>
         </div> 
-        <table>
+        <table border="2">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -22,15 +39,31 @@
                 {% for vendor in proveedor_list %}
                 <tr>
                     <td>{{ vendor.id_supplier }}</td>
-                    <td></td>
                     <td> {{vendor.name}} </td>
                     <td><a href="{% url 'Vendor_Update' vendor.id_supplier %}">Editar</a> </td>
                 </tr>
                 {% endfor %}
             </tbody>
-            
         </table>
-    </div>
 
+        <div class="pagination">
+            <span class="step-links">
+                {% if proveedor_list.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ proveedor_list.previous_page_number }}">previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ proveedor_list.number }} of {{ proveedor_list.paginator.num_pages }}.
+                </span>
+        
+                {% if proveedor_list.has_next %}
+                    <a href="?page={{ proveedor_list.next_page_number }}">next</a>
+                    <a href="?page={{ proveedor_list.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+    </div>
 
 {% endblock %}

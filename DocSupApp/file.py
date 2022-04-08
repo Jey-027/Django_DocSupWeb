@@ -1,11 +1,9 @@
 import time
-# from wsgiref import validate
-# from DocSupWeb.DocSupApp.views import DetFactUpdate
-# import views as doc
+
 
 
 class CreateFile():
-    template_name = 'DocSupAp/enviar_file.html'
+   
     
     def genera_documento(self):
         f = open("C:/load/txt/pruebaDjangofile.txt" ,"w+")
@@ -13,7 +11,7 @@ class CreateFile():
         f.write("CUD,123456789ASD0987654321\n")
         f.write("EMI,1,,11001,Bogotá D.C.,110111,Bogotá,11,CRA 72 80-94 OF 902 CTRO EMP. TITAN PLAZA,CO,Colombia,,Black & Decker de Colombia S.A.S,935462718,1,31 \n")
         f.write("TAC,O-13\n")
-        f.write("GTE,01,IVA\n")
+        f.write("GTE,01,IVA\n" + "ACA DEBE IR EL CAMPO DE LA LISTA -- "  + "\n")   
        #f.write("ADQ,1,,,,,,,,,," + "%s"%cli.list[7] + ",, " + "%s"%cli.list[8] + "," + "%s"%cli.list[2] + "\n")
         f.write("TCR,O-13;O-15\n")  ## VALIDAR SI ES 13 0 15
         f.write("GTA,01,IVA\n") 

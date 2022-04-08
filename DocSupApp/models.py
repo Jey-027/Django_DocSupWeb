@@ -18,6 +18,10 @@ class proveedor(models.Model):
     name_est_fed_prov=models.CharField(max_length=40)
     currency_type=models.CharField(max_length=10)
 
+    normal_pagination = True
+    # values_for_page = 5
+    
+
     def get_absolute_url(self):
         return "/proveedor"
 
@@ -61,9 +65,29 @@ class documento(models.Model):
     status = models.IntegerField(default=1, null=True)  
     Date_process = models.DateTimeField(null=True)
     user_process = models.CharField(max_length=10, null=True)
+    payment_date = models.DateField(null=True)
+
+    # normal_pagination = True
+    # values_for_page = 20
 
     def get_abosulte_url(self):
         return "/documento"
     
     def __str__(self):
-        return f"{self.name_supplier_vendor}"
+        return f"{self.id, self.suplier_tax_code, self.Nit, self.type_of_tax_number, self.date_Invoice, self.item_description, self.tax_amount, self.net_amount, self.payment_date}"
+
+
+        # 
+        '''
+        payment_date
+        0 = id
+        2 = suplier_tax_code
+        7 = Nit
+        8 = type_of_tax_number
+        16 = date_Invoice
+        17 = item_description
+        21 = tax_amount
+        20 = net_amount
+        
+
+        '''

@@ -33,7 +33,7 @@
                     <td>{{ fact.status }}</td>
                     <td></td>
                     <td>{{ fact.net_amount }}</td>
-                    <td><a href="{% url 'Genera_file' fact.id %}">Generar Documento</a></td>
+                    <td><a href="{% url 'Documento_generado' fact.id %}">Generar Documento</a></td>
                 </tr>
                 {% endif %}
             {% endfor %}

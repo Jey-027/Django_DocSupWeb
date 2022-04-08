@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Genera Documento{% endblock %}
+
+
+{% block content %}
+
+    <div>
+        <h1>esto es una prueba</h1>
+        <form method="post">
+            <div>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Send">
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
