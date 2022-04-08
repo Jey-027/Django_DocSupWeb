@@ -12,7 +12,6 @@ class documentoForm(forms.ModelForm):
         ,"name_supplier_vendor"
         ,"id_supplier_invoice"
         ,"net_amount"
-        #,"status" 
         ,"payment_date"
         ,"user_process"
     ]

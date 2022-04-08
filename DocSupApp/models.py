@@ -76,18 +76,3 @@ class documento(models.Model):
     def __str__(self):
         return f"{self.id, self.suplier_tax_code, self.Nit, self.type_of_tax_number, self.date_Invoice, self.item_description, self.tax_amount, self.net_amount, self.payment_date}"
 
-
-        # 
-        '''
-        payment_date
-        0 = id
-        2 = suplier_tax_code
-        7 = Nit
-        8 = type_of_tax_number
-        16 = date_Invoice
-        17 = item_description
-        21 = tax_amount
-        20 = net_amount
-        
-
-        '''

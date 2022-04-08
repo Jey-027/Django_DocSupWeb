@@ -12,8 +12,9 @@
         <div>
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Update">
+            <button type="submit" class="btn btn-outline-info btn-lg btn-block">Update</button>  
         </div>
     </form>
 
+    
 {% endblock %}

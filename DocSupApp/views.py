@@ -1,5 +1,7 @@
-from .forms import documentoForm
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
+# from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
@@ -7,34 +9,56 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from .models import documento, proveedor, documento
 from django.urls import reverse_lazy
+from .forms import documentoForm
 import time
-from .file import CreateFile
 # Create your views here.
 
 
+# def login_view(request):
+#     context = {
+#         "login_view": "active"
+#     }
+#     if request.method == "POST":
+#         username = request.POST["username"]
+#         password = request.POST["password"]
+#         user = authenticate(request, username=username, password = password)
 
-#@login_required
+#         if user is not None:
+#             login(request, user)
+#             return redirect("Home")
+
+#         else:
+#             return HttpResponse("Invalid credentials")
+#     return render(request, "registration/login.html", context)
+
+def logout_view(request):
+  logout(request)
+  return redirect("Home")
+
+
+@login_required
 def home(request):
-    context = {"name": request.user.username}
+    context = {"name": "<Put your name here>"}
     return render(request, "DocSupApp/home.html", context)
+
 
 class SignUp(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     template_name = "registration/signup.html"
 
-class vendorList(ListView):
+class vendorList(LoginRequiredMixin,ListView):
     model = proveedor
     context_object_name = "proveedor_list"
     paginate_by = 20
 
-class VendorCreate(CreateView):
+class VendorCreate(LoginRequiredMixin,CreateView):
     model = proveedor
     template_name = "DocSupApp/proveedor_create.html"
     fields = "__all__"
     success_url = "/vendor/list"
 
-class VendorUpdate(UpdateView):
+class VendorUpdate(LoginRequiredMixin,UpdateView):
     model = proveedor
     template_name = "DocSupApp/proveedor_update.html"
     fields = "__all__"
@@ -42,13 +66,13 @@ class VendorUpdate(UpdateView):
 
 # aqui van las view sobre la generacion del documento
 
-class DetFactList(ListView):
+class DetFactList(LoginRequiredMixin,ListView):
     model = documento
     context_object_name = "lista_de_Documentos"
 
 
 
-class DetFactUpdate(UpdateView):
+class DetFactUpdate(LoginRequiredMixin,UpdateView):
     model = documento
     template_name = "DocSupApp/Genera_file.html"
     fields = [
@@ -69,24 +93,6 @@ class DetFactUpdate(UpdateView):
         "status": 1 }
 
     success_url = "/facturas/list"
-
-    # if success_url == "/facturas/list":
-        # ocreatefile = CreateFile()
-        # ocreatefile.genera_documento()
-    
-
-# class CreateFile():
-   
-    
-#     def genera_documento(self):
-#         f = open("C:/load/txt/pruebaDjangofile.txt" ,"w+")
-#         f.write("ENC,DS,DIAN 2.1: Documento soporte en adquisiciones efectuadas a no obligados a facturar.,DME1503," + time.strftime('%Y-%m-%d,%H:%M:%S', time.localtime()) +"-05:00," + "05,COP,1," + "FECHA DE PAGO" + ",2,10,UBL 2.1\n")
-#         f.write("CUD,123456789ASD0987654321\n")
-#         f.write("EMI,1,,11001,Bogotá D.C.,110111,Bogotá,11,CRA 72 80-94 OF 902 CTRO EMP. TITAN PLAZA,CO,Colombia,,Black & Decker de Colombia S.A.S,935462718,1,31 \n")
-#         f.write("TAC,O-13\n")
-#         f.write("GTE,01,IVA\n" + "ACA DEBE IR EL CAMPO DE LA LISTA -- "   + "\n")
-#         f.close()
-
 
 
 # def updateDocumento(request, id):

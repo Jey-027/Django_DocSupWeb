@@ -9,22 +9,31 @@
 
 <h1>Welcome !!</h1>
 
-    <!-- Message -->
-    <section class="page-section cta">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-9 mx-auto">
-              <div class="cta-inner text-center rounded">
-                <h2 class="section-heading mb-4">
-                  <span class="section-heading-upper"> </span>
-                  <span class="section-heading-lower"> </span>
-                </h2>
-                <p class="mb-0"> </p>
-              </div>
-            </div>
+<nav class="navbar navbar-light bg-light">
+  <form class="form-inline">
+    <a href="{% url 'logout' %}" class="btn btn-outline-info" role="button" aria-pressed="true" >Log Out</a>
+  </form>
+  
+</nav>
+
+<!-- Message -->
+<section class="page-section cta">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <div class="cta-inner text-center rounded">
+            <h2 class="section-heading mb-4">
+              <span class="section-heading-upper"> </span>
+              <span class="section-heading-lower"> </span>
+            </h2>
+            <p class="mb-0"> </p>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+</section>
+
+  
 
 {% endblock %}
 

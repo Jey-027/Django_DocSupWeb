@@ -6,39 +6,34 @@
 
 <div>
     <h2>Detalle Facturacion</h2>
-    <p>facturas que Necesitan documento soporte</p>
+    <p>Documentos pendientes por realizar</p>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Fecha</th>
-                <th></th>
-                <th>Nombre</th>
-                <th>COFP</th>
-                <th></th><th>status</th>
-                <th>Valor</th>
-
-            </tr>
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">COFP</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Valor</th>
+            
+          </tr>
         </thead>
         <tbody>
             {% for fact in lista_de_Documentos %}
-                {% if fact.status != 1 %}
-                <tr>
-                    <td>{{ fact.date_invoice }}</td>
-                    <td></td>
-                    <td>{{ fact.name_supplier_vendor }}</td>
-                    <td></td>
-                    <td>{{ fact.id_supplier_invoice }}</td>
-                    <td></td>
-                    <td>{{ fact.status }}</td>
-                    <td></td>
-                    <td>{{ fact.net_amount }}</td>
-                    <td><a href="{% url 'Documento_generado' fact.id %}">Generar Documento</a></td>
-                </tr>
-                {% endif %}
+            {% if fact.status != 1 %}
+          <tr>
+            <th>{{ fact.id }}</th>
+            <td>{{ fact.date_Invoice }}</td>
+            <td>{{ fact.id_supplier_invoice }}</td>
+            <td>{{ fact.name_supplier_vendor }}</td>
+            <td>{{ fact.net_amount }}</td>
+            <td><a href="{% url 'Documento_generado' fact.id %}" class="btn btn-outline-info" role="button" aria-pressed="true">Generar Documento</a>
+          </tr>
+            {% endif %}
             {% endfor %}
         </tbody>
-    </table>
+      </table>
 </div>
 
 

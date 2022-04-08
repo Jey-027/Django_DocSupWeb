@@ -8,12 +8,12 @@
 {% block content %}
 
     <div>
-        <h1>esto es una prueba</h1>
+        <h1>Documento</h1>
         <form method="post">
             <div>
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="submit" value="Send">
+                <button type="submit" class="btn btn-outline-info btn-lg btn-block">Send</button> 
             </div>
         </form>
     </div>
