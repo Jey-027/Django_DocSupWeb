@@ -54,7 +54,9 @@
           <li class="nav-item {% if request.path == '/' %}active{% endif %} px-lg-4">
             <a class="nav-link text-uppercase text-expanded" href="{% url 'Detalle_facturacion' %}">Facturas</a>
           </li>
- 
+          <li>
+            <a href="{% url 'logout' %}" class="btn btn-outline-info" role="button" aria-pressed="true" >Log Out</a>
+          </li>
         </ul>
       </div>
     </div>
