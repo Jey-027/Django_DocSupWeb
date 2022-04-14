@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Actualiza proveedor{% endblock %}
+
+
+{% block content %}
+
+    <h2>Editar Proveedor</h2>
+    <form method="post">
+        <div>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-outline-info btn-lg btn-block">Update</button>  
+        </div>
+    </form>
+
+    
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Crear proveedor{% endblock %}
+
+{% block content %}
+
+    <h2>Crear Proveedor</h2>
+    <form method="post">
+        <div>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Crear registro">
+        </div>
+    </form>
+
+{% endblock %}
