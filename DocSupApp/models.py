@@ -34,6 +34,7 @@ class documento(models.Model):
     id_supplier_vendor = models.CharField(max_length=20)
     name_supplier_vendor = models.CharField(max_length=100)
     suplier_tax_code = models.CharField(max_length=10)
+    city_id = models.CharField(max_length=10)
     city_name = models.CharField(max_length=40)
     email = models.CharField(max_length=50)
     Nit = models.CharField(max_length=20)
@@ -62,10 +63,12 @@ class documento(models.Model):
     amount_ICA = models.CharField(max_length=20)
     Value_RTE = models.CharField(max_length=30)
     total_retenciones = models.CharField(max_length=30)
-    status = models.IntegerField(default=1, null=True)  
+    tipo_persona = models.IntegerField(null=True)
+    status = models.IntegerField(null=True)  
     Date_process = models.DateTimeField(null=True)
-    user_process = models.CharField(max_length=10, null=True)
+    user_process = models.CharField(max_length=30, null=True)
     payment_date = models.DateField(null=True)
+    num_documento = models.CharField(max_length=100, null=True)
 
     # normal_pagination = True
     # values_for_page = 20
@@ -76,3 +79,20 @@ class documento(models.Model):
     def __str__(self):
         return f"{self.id, self.suplier_tax_code, self.Nit, self.type_of_tax_number, self.date_Invoice, self.item_description, self.tax_amount, self.net_amount, self.payment_date}"
 
+
+class properties(models.Model):
+    id = models.AutoField(primary_key=True)
+    Num_resolution = models.IntegerField()
+    path_file = models.CharField(max_length=100, null=True)
+    name_file = models.CharField(max_length=100, null=True)
+    autorization = models.CharField(max_length=100, null=True)
+    start_date_res = models.DateField(null=True)
+    end_date_res = models.DateField(null=True)
+    prefijo_res = models.CharField(max_length=10, null=True)
+    initial_range_res = models.IntegerField(null=True)
+    end_range_res = models.IntegerField(null=True)
+
+
+
+    def __str__(self):
+        return f"{self.Num_resolution}"

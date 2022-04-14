@@ -4,26 +4,17 @@
 <html>
 
 <head>
-    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>
-      {% block title %} {% endblock %}
-    </title>
+    <title>{% block title %} {% endblock %}</title>
 
     <!-- Bootstrap -->
     <link href="{% static 'DocSupApp/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
      <!-- Fonts -->
-    
      <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
-
      <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
-
-
-     
     <!-- Styles -->
     <link href="{% static 'DocSupApp/css/gestion.css' %}" rel="stylesheet">
 </head>
@@ -31,9 +22,8 @@
 <body>
 
     <h1 class="site-heading text-center text-white d-none d-lg-block">
-      
         <span class="site-heading-lower">Documento de Soporte</span>
-      </h1>
+    </h1>
 
 
  <!-- Navbar -->
@@ -56,6 +46,9 @@
           </li>
           <li>
             <a href="{% url 'logout' %}" class="btn btn-outline-info" role="button" aria-pressed="true" >Log Out</a>
+          </li>
+          <li>
+            {{ user.username }}
           </li>
         </ul>
       </div>
