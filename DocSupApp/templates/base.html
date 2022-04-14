@@ -25,6 +25,8 @@
         <span class="site-heading-lower">Documento de Soporte</span>
     </h1>
 
+    
+
 
  <!-- Navbar -->
  <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
@@ -44,15 +46,11 @@
           <li class="nav-item {% if request.path == '/' %}active{% endif %} px-lg-4">
             <a class="nav-link text-uppercase text-expanded" href="{% url 'Detalle_facturacion' %}">Facturas</a>
           </li>
-          <li>
-            <a href="{% url 'logout' %}" class="btn btn-outline-info" role="button" aria-pressed="true" >Log Out</a>
-          </li>
-          <li>
-            {{ user.username }}
-          </li>
         </ul>
       </div>
     </div>
+    <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+    <a href="{% url 'logout' %}" class="btn btn-outline-warning" role="button" aria-pressed="true" >Log Out</a>
   </nav>
 
 

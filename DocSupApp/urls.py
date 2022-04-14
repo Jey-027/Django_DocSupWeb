@@ -11,6 +11,7 @@ urlpatterns = [
     path('vendor/update/<pk>', views.VendorUpdate.as_view(), name="Vendor_Update"),
     path('facturas/list', views.DetFactList.as_view(), name="Detalle_facturacion"),
     path('generaDocumento/<id>', views.updateDocumento, name="Documento_generado"),
-
+    path('reporte_excel_vendor/', views.reporteExcelVendor.as_view(), name="Reporte_Excel_vendor"),
+    path('reporte_Documentos/', views.reporteListaDocumentos.as_view(), name="Reporte_Documentos"),
 ]
 

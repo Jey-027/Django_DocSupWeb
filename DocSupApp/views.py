@@ -1,8 +1,9 @@
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from .models import documento, proveedor, documento, properties
@@ -10,8 +11,12 @@ from django.urls import reverse_lazy
 from .forms import documentoForm
 from datetime import datetime
 import time
+from openpyxl import Workbook
+# from django.contrib.auth.models import User
 
 # Create your views here.
+
+
 
 
 def logout_view(request):
@@ -98,6 +103,140 @@ def updateDocumento(request, id):
     return render(request, "DocSupApp/generacion_documento.html", {"form": form})
 
 
+class reporteExcelVendor(TemplateView):
+    def get(self, request, *args, **kwargs):
+        vendor = proveedor.objects.all()
+        wb = Workbook()
+        ws = wb.active
+        ws["A1"]= "REPORTE DE PROVEEDORES"
 
+        ws.merge_cells("A1:N1")
+        ws["A3"]= "Id Supplier"
+        ws["B3"]= "Name"
+        ws["C3"]= "Tax code"
+        ws["D3"]= "city id"
+        ws["E3"]= "City Name"
+        ws["F3"]= "Email"
+        ws["G3"]= "Nit"
+        ws["H3"]= "Tax Description"
+        ws["I3"]= "Type of tax number"
+        ws["J3"]= "Address"
+        ws["K3"]= "Country"
+        ws["L3"]= "Estado federal"
+        ws["M3"]= "name estado federal"
+        ws["N3"]= "Currency type"
+
+        cont = 4
+
+        for vendor in vendor:
+            ws.cell(row= cont, column= 1).value = vendor.id_supplier
+            ws.cell(row= cont, column= 2).value = vendor.name
+            ws.cell(row= cont, column= 3).value = vendor.supplier_tax_code
+            ws.cell(row= cont, column= 4).value = vendor.city_id
+            ws.cell(row= cont, column= 5).value = vendor.city_name
+            ws.cell(row= cont, column= 6).value = vendor.email
+            ws.cell(row= cont, column= 7).value = vendor.nit
+            ws.cell(row= cont, column= 8).value = vendor.supplier_tax_description
+            ws.cell(row= cont, column= 9).value = vendor.Type_of_tax_number
+            ws.cell(row= cont, column= 10).value = vendor.address
+            ws.cell(row= cont, column= 11).value = vendor.country
+            ws.cell(row= cont, column= 12).value = vendor.est_fed_prov
+            ws.cell(row= cont, column= 13).value = vendor.name_est_fed_prov
+            ws.cell(row= cont, column= 14).value = vendor.currency_type
+            cont += 1
+
+        file_name = "ReporteProveedores.xlsx"
+        response = HttpResponse(content_type = "application/ms-excel")
+        content = "attachment; filename = {0}".format(file_name)
+        response["Content-Disposition"] = content
+        wb.save(response)
+        return response
+
+class reporteListaDocumentos(TemplateView):
+    def get(self,request, *args, **kwargs):
+        document = documento.objects.all()
+        wb = Workbook()
+        ws = wb.active
+        ws["A1"]= "REPORTE DE DOCUMENTOS "
+
+        ws.merge_cells("A1:N1")
+        ws["A3"]= "Id supplier vendor"
+        ws["B3"]= "Name vendor"
+        ws["C3"]= "Tax code"
+        ws["D3"]= "City Name"
+        ws["E3"]= "Nit"
+        ws["F3"]= "Type tax number"
+        ws["G3"]= "Currency type"
+        ws["H3"]= "Supplier id"
+        ws["I3"]= "Name supplier customer"
+        ws["J3"]= "COFP"
+        ws["K3"]= "Date invoice"
+        ws["L3"]= "Item description"
+        ws["M3"]= "ZsupplierID"
+        ws["N3"]= "zSupplierName"
+        ws["O3"]= "Net Amount"
+        ws["P3"]= "Tax Amount"
+        ws["Q3"]= "Gross Amount"
+        ws["R3"]= "Percent RTE"
+        ws["S3"]= "Percent IVA"
+        ws["T3"]= "Percent ICA"
+        ws["U3"]= "Amount IVA"
+        ws["V3"]= "Amount RTE"
+        ws["W3"]= "Amount ICA"
+        ws["X3"]= "Value RTE"
+        ws["Y3"]= "Total Retenciones"
+        ws["Z3"]= "Person Type"
+        ws["AA3"]= "Status"
+        ws["AB3"]= "Date Process"
+        ws["AC3"]= "User Process"
+        ws["AD3"]= "Payment date"
+        ws["AE3"]= "Document number"
+
+        cont = 4
+
+        for document in document:
+            ws.cell(row= cont, column=1).value = document.id_supplier_vendor
+            ws.cell(row= cont, column=2).value = document.name_supplier_vendor
+            ws.cell(row= cont, column=3).value = document.suplier_tax_code
+            ws.cell(row= cont, column=4).value = document.city_name
+            ws.cell(row= cont, column=5).value = document.Nit
+            ws.cell(row= cont, column=6).value = document.type_of_tax_number
+            ws.cell(row= cont, column=7).value = document.currency_type
+            ws.cell(row= cont, column=8).value = document.supplier_id_Customer
+            ws.cell(row= cont, column=9).value = document.name_supplier_customer
+            ws.cell(row= cont, column=10).value = document.id_supplier_invoice
+            ws.cell(row= cont, column=11).value = document.date_Invoice
+            ws.cell(row= cont, column=12).value = document.item_description
+            ws.cell(row= cont, column=13).value = document.zSupplierID
+            ws.cell(row= cont, column=14).value = document.zSupplierName
+            ws.cell(row= cont, column=15).value = document.net_amount
+            ws.cell(row= cont, column=16).value = document.tax_amount
+            ws.cell(row= cont, column=17).value = document.gross_amount
+            ws.cell(row= cont, column=18).value = document.percent_RTE
+            ws.cell(row= cont, column=19).value = document.percent_IVA
+            ws.cell(row= cont, column=20).value = document.percent_ICA
+            ws.cell(row= cont, column=21).value = document.amount_RTE
+            ws.cell(row= cont, column=22).value = document.amount_IVA
+            ws.cell(row= cont, column=23).value = document.amount_ICA
+            ws.cell(row= cont, column=24).value = document.Value_RTE
+            ws.cell(row= cont, column=25).value = document.total_retenciones
+            ws.cell(row= cont, column=26).value = document.tipo_persona
+            ws.cell(row= cont, column=27).value = document.status
+            ws.cell(row= cont, column=28).value = document.Date_process
+            ws.cell(row= cont, column=29).value = document.user_process
+            ws.cell(row= cont, column=30).value = document.payment_date
+            ws.cell(row= cont, column=31).value = document.num_documento
+            cont +=1
+
+        file_name = "ReporteDocumentos.xlsx"
+        response = HttpResponse(content_type = "application/ms-excel")
+        content = "attachment; filename = {0}".format(file_name)
+        response["Content-Disposition"] = content
+        wb.save(response)
+        return response
+
+
+
+  
 
 
