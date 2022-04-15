@@ -162,8 +162,8 @@ p {
   position: relative;
   padding: 3rem;
   margin: 0.5rem;
-  background-color: rgb(243, 242, 234);
-  color: cornsilk;
+  background-color: rgb(221, 213, 155);
+  color: rgb(0, 0, 0);
 }
 
 .cta .cta-inner:before {

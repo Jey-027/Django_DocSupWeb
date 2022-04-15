@@ -21,7 +21,55 @@
               <span class="section-heading-upper"> </span>
               <span class="section-heading-lower"> </span>
             </h2>
-            <p class="mb-0"> </p>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th><h3>Documentos sin procesar</h3></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><h3>{{ documentoNull|length }}</h3></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <hr/>
+          
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th><h3>Documentos generados</h3></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><h3>{{ documento1|length }}</h3></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <hr/>
+
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th><h3>Total de Documentos</h3></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><h3>{{ documento|length }}</h3></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
           </div>
         </div>
       </div>

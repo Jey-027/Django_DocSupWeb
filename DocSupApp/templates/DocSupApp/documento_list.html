@@ -28,7 +28,7 @@
         </thead>
         <tbody>
             {% for fact in lista_de_Documentos %}
-            {% if fact.status != 1 %}
+              {%if fact.status != '1' %}
           <tr>
             <th>{{ fact.id }}</th>
             <td>{{ fact.date_Invoice }}</td>
@@ -37,7 +37,7 @@
             <td>{{ fact.net_amount }}</td>
             <td><a href="{% url 'Documento_generado' fact.id %}" class="btn btn-outline-info" role="button" aria-pressed="true">Generar Documento</a>
           </tr>
-            {% endif %}
+              {% endif %}
             {% endfor %}
         </tbody>
       </table>

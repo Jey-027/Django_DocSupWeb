@@ -69,7 +69,7 @@ class documento(models.Model):
     Value_RTE = models.CharField(max_length=30)
     total_retenciones = models.CharField(max_length=30)
     tipo_persona = models.TextField(null=True, choices=personType_choices)
-    status = models.IntegerField(null=True)  
+    status = models.TextField(null=True)  
     Date_process = models.DateTimeField(null=True)
     user_process = models.CharField(max_length=30, null=True)
     payment_date = models.DateField(null=True)

@@ -1,31 +1,34 @@
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from .models import documento, proveedor, documento, properties
+from django.db.models import Q
 from .forms import documentoForm
 from datetime import datetime
 from openpyxl import Workbook
 import time
 # Create your views here.
 
-
-
-
 def logout_view(request):
   logout(request)
   return redirect("Home")
 
 
-@login_required
-def home(request):
-    context = {"name": "<Put your name here>"}
-    return render(request, "DocSupApp/home.html", context)
+class homeView(LoginRequiredMixin, TemplateView):
+    template_name = "DocSupApp/home.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["documento"] = documento.objects.all()
+        context["documentoNull"] = documento.objects.filter(~Q(status=1))
+        context["documento1"] = documento.objects.filter(status=1)
+        context["proveedor"] = proveedor.objects.all()
+        return context
 
 
 class SignUp(CreateView):

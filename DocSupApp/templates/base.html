@@ -38,13 +38,16 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item {% if request.path == '/' %}active{% endif %} px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="{% url 'Home' %}">Inicio</a>
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Home' %}"><h4>Inicio</h4></a>
           </li>
           <li class="nav-item {% if request.path == '/' %}active{% endif %} px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="{% url 'vendorList' %}">Proveedores</a>
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'vendorList' %}"><h4>Proveedores</h3></a>
           </li>
           <li class="nav-item {% if request.path == '/' %}active{% endif %} px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="{% url 'Detalle_facturacion' %}">Facturas</a>
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Detalle_facturacion' %}"><h4>Facturas</h4></a>
+          </li>
+          <li class="nav-item {% if request.path == '/' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Detalle_facturacion' %}"><h4>Reportes</h4></a>
           </li>
         </ul>
       </div>
