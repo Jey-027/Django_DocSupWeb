@@ -6,14 +6,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
-from .models import documento, proveedor, documento, properties
 from django.urls import reverse_lazy
+from .models import documento, proveedor, documento, properties
 from .forms import documentoForm
 from datetime import datetime
-import time
 from openpyxl import Workbook
-# from django.contrib.auth.models import User
-
+import time
 # Create your views here.
 
 
@@ -73,6 +71,7 @@ def updateDocumento(request, id):
             doc.num_documento = numRes.name_file + str(numRes.Num_resolution)
             doc.Date_process = datetime.now()
             doc.status = 1
+            doc.user_process = str(request.user)
             form.save()
             
         f = open("%s"%name_file ,"w+")

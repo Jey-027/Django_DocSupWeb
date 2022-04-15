@@ -30,6 +30,11 @@ class proveedor(models.Model):
 
 
 class documento(models.Model):
+    personType_choices = [
+        ("1", "Persona Natural"),
+        ("13", "Persona Juridica"),
+    ]
+
     id = models.AutoField(primary_key=True) 
     id_supplier_vendor = models.CharField(max_length=20)
     name_supplier_vendor = models.CharField(max_length=100)
@@ -63,7 +68,7 @@ class documento(models.Model):
     amount_ICA = models.CharField(max_length=20)
     Value_RTE = models.CharField(max_length=30)
     total_retenciones = models.CharField(max_length=30)
-    tipo_persona = models.IntegerField(null=True)
+    tipo_persona = models.TextField(null=True, choices=personType_choices)
     status = models.IntegerField(null=True)  
     Date_process = models.DateTimeField(null=True)
     user_process = models.CharField(max_length=30, null=True)

@@ -5,6 +5,7 @@ from .models import documento
 class documentoForm(forms.ModelForm):
     class Meta:
         model = documento
+        
         fields = [
         "id"
         ,"id_supplier_vendor"
@@ -13,8 +14,13 @@ class documentoForm(forms.ModelForm):
         ,"item_description"
         ,"net_amount"
         ,"payment_date"
-        ,"tipo_persona"
-    ]
+        ,"tipo_persona" 
+        ]
 
+        # labels = {
+        #     "payment_date": "Payment Date (YYYY-MM-DD)"
+        # }
 
-
+        widgets = {
+            "payment_date" : forms.SelectDateWidget
+        }
