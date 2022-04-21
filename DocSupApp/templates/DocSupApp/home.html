@@ -15,21 +15,15 @@
 <section class="page-section cta">
     <div class="container">
       <div class="row">
-        <div class="col-xl-9 mx-auto">
-          <div class="cta-inner text-center rounded">
-            <h2 class="section-heading mb-4">
-              <span class="section-heading-upper"> </span>
-              <span class="section-heading-lower"> </span>
-            </h2>
             <div>
-              <table>
-                <thead>
+              <table class="table">
+                <thead class="thead-dark">
                   <tr>
                     <th><h3>Documentos sin procesar</h3></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr class="table-danger">
                     <td><h3>{{ documentoNull|length }}</h3></td>
                   </tr>
                 </tbody>
@@ -39,14 +33,14 @@
             <hr/>
           
             <div>
-              <table>
-                <thead>
+              <table class="table">
+                <thead class="thead-dark">
                   <tr>
                     <th><h3>Documentos generados</h3></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr class="table-info">
                     <td><h3>{{ documento1|length }}</h3></td>
                   </tr>
                 </tbody>
@@ -56,8 +50,8 @@
             <hr/>
 
             <div>
-              <table>
-                <thead>
+              <table class="table">
+                <thead class="thead-dark">
                   <tr>
                     <th><h3>Total de Documentos</h3></th>
                   </tr>
@@ -70,8 +64,7 @@
               </table>
             </div>
 
-          </div>
-        </div>
+
       </div>
     </div>
 </section>

@@ -6,10 +6,18 @@
 
 <div>
     <h2>Detalle Facturacion</h2>
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     
 
     <nav class="navbar navbar-light bg-light">
-      <form class="form-inline">
+
         <a href="{% url 'Reporte_Documentos' %}" class="btn btn-outline-primary" role="button" aria-pressed="true">Exportar a Excel</a>
     </nav>
   
@@ -23,12 +31,13 @@
             <th scope="col">COFP</th>
             <th scope="col">Nombre</th>
             <th scope="col">Valor</th>
+            <th scope="col"></th>
             
           </tr>
         </thead>
         <tbody>
             {% for fact in lista_de_Documentos %}
-              {%if fact.status != '1' %}
+              {%if fact.status != '1' and fact.type_of_tax_number == '13' %}
           <tr>
             <th>{{ fact.id }}</th>
             <td>{{ fact.date_Invoice }}</td>

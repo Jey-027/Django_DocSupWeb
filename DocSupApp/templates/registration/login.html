@@ -7,22 +7,16 @@
   {% load static %}
     
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Login</title>
 
     <!-- Bootstrap -->
     <link href="{% static 'DocSupApp/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-     <!-- Fonts -->
-    
+     <!-- Fonts -->  
      <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
-
      <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
-
-
-     
     <!-- Styles -->
     <link href="{% static 'DocSupApp/css/gestion.css' %}" rel="stylesheet">
 </head>
@@ -30,46 +24,31 @@
 <body>
 
     <h1 class="site-heading text-center text-white d-none d-lg-block">
-      
         <span class="site-heading-lower">Documento de Soporte</span>
-      </h1>
+    </h1>
 
 
-<h2>Please login</h2>
-  <form class="login" method="post">
-      <div>
-        {% csrf_token %}
-        {{ form.as_p }}
-          
-        <button type="submit" class="btn btn-outline-info btn-lg btn-block">Login</button>  
 
-      </div>
-  </form>
+    <div class="signup-form">
+      <h2>Please login</h2>
+      <form class="login" method="post">
+        <div>
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-outline-info btn-lg btn-block">Login</button>  
+        </div>
+      </form>
+        <a class="btn btn-outline-primary btn-lg btn-block" href="https://sbdkproduction.service-now.com/iserve/catalog.do?sysparm_document_key=sc_cat_item_producer,ec0a9bd22b82ea00a2c9c54119da159c&uri=com.glideapp.servicecatalog_cat_item_view.do%3Fv%3D1%26sysparm_id%3Dec0a9bd22b82ea00a2c9c54119da159c%26sysparm_no_search%3Dtrue">Restablecer contraseña</a>
+    </div>
+    
+    <div>
+      <p></p>
+    </div>
 
 
     <!-- Footer -->
     <footer class="footer text-faded text-center py-5">
       <div class="container">
-        <p class="m-0">
-	        <a href="#" class="link">
-	          <span class="fa-stack fa-lg">
-	            <i class="fa fa-circle fa-stack-2x"></i>
-	            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-	          </span>
-	        </a>
-	        <a href="#" class="link">
-	          <span class="fa-stack fa-lg">
-	            <i class="fa fa-circle fa-stack-2x"></i>
-	            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-	          </span>
-	        </a>
-	        <a href="#" class="link">
-	          <span class="fa-stack fa-lg">
-	            <i class="fa fa-circle fa-stack-2x"></i>
-	            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
-	          </span>
-	        </a>
-	    </p>
         <p class="m-0 mbt">
         	<a href="" class="link">Política de privacidad</a> ·
         	<a href="" class="link">Aviso legal</a> ·

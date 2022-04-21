@@ -17,9 +17,6 @@ class documentoForm(forms.ModelForm):
         ,"tipo_persona" 
         ]
 
-        # labels = {
-        #     "payment_date": "Payment Date (YYYY-MM-DD)"
-        # }
 
         widgets = {
             "payment_date" : forms.SelectDateWidget

@@ -31,8 +31,8 @@ class proveedor(models.Model):
 
 class documento(models.Model):
     personType_choices = [
-        ("1", "Persona Natural"),
-        ("13", "Persona Juridica"),
+        ("2", "Persona Natural"),
+        ("1", "Persona Juridica"),
     ]
 
     id = models.AutoField(primary_key=True) 
