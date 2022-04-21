@@ -104,7 +104,7 @@ def updateDocumento(request, id):
             f.write("GTA,01,IVA\n") 
             f.write("TOT," + "%s"%doc.net_amount + ",COP," + "%s"%doc.net_amount  + ",COP," + "%s"%doc.net_amount  + ",COP," + "%s"%doc.net_amount  + ",COP,0.00,COP,0.00,COP,,,,\n")
             f.write("TIM,true,0.00,COP\n")
-            f.write("IMP,01," + "%s"%doc.net_amount  + ",COP," + "%s"%doc.tax_amount + ",COP,19.00\n")	
+            f.write("IMP,01," + "%s"%doc.net_amount  + ",COP," + "%s"%doc.tax_amount + ",COP,0.00\n")	
             f.write("DRF,"+ "%s"%numRes.autorization + "," + "%s"%numRes.start_date_res + "," + "%s"%numRes.end_date_res + "," + "%s"%numRes.prefijo_res + "," + "%s"%numRes.initial_range_res + "," + "%s"%numRes.end_range_res + "\n")
             f.write("NOT,1_Responsable de impuesto sobre las ventas - IVA - Agentes Retenedores de IVA.\n")
             f.write("MEP,1,2," +  "%s"%doc.payment_date + "\n") ## VALIDAR SI LA FECHA DE CREDITO DEBE INSERTAR EL USUARIO
