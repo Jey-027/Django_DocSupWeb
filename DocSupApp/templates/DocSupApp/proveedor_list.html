@@ -12,17 +12,19 @@
         <!-- esta seccion es para crear el boton de busqueda y el boton para agregar un nuevo proveedor-->
 
         <nav class="navbar navbar-light bg-light">
-            <form class="form-inline">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-            </form>
-            <a href="{% url 'Vendor_create' %}" class="btn btn-outline-info" role="button" aria-pressed="true">➕</a>
             <a href="{% url 'Reporte_Excel_vendor' %}" class="btn btn-outline-primary" role="button" aria-pressed="true" >Exportar a Excel</a>
+            <a href="{% url 'Vendor_create' %}" class="btn btn-outline-info" role="button" aria-pressed="true">➕</a>
+
+            <form method="get" class="form-inline">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="Search">
+                <span class="input-group-list">
+                    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                </span>
+                
+            </form>
         </nav>
 
-
         <!-- se crea la tabla que muestra los proveedores  -->
-
         <div>
             <table class="table">
                 <thead class="thead-dark">
@@ -31,6 +33,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Tax code</th>
                     <th scope="col">Ciudad</th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,7 +47,7 @@
                 </tr>
                     {% endfor %}
                 </tbody>
-          </table>
+            </table>
         </div>
 
         <!-- Se crea la paginacion  -->
@@ -66,26 +69,22 @@
                 {% endif %}
             </span>
         </div> -->
+
         <nav aria-label="...">
             <ul class="pagination">
-              <li class="page-item disabled">
-                <a class="page-link" href="?page=1" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="?page={{ proveedor_list.previous_page_number }}">1</a></li>
-              <li class="page-item active">
-                <a class="page-link" href={{ proveedor_list.number }} of {{ proveedor_list.paginator.num_pages }}>2 <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="page-item"><a class="page-link" href="?page={{ proveedor_list.next_page_number }}">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="?page={{ proveedor_list.paginator.num_pages }}">Next</a>
-              </li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="?page=1" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="?page={{ proveedor_list.previous_page_number }}">1</a></li>
+                <li class="page-item active">
+                    <a class="page-link" href={{ proveedor_list.number }} of {{ proveedor_list.paginator.num_pages }}>2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item"><a class="page-link" href="?page={{ proveedor_list.next_page_number }}">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ proveedor_list.paginator.num_pages }}">Next</a>
+                </li>
             </ul>
-          </nav>
-
-
-
-
-
+        </nav>
 
     </div>
 

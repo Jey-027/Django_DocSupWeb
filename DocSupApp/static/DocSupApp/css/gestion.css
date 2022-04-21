@@ -112,6 +112,11 @@ p {
   }
 }
 
+
+.navbarpropio {
+  justify-content: end;
+}
+
 .btn-xl {
   font-weight: 700;
   font-size: 0.8rem;
@@ -283,6 +288,7 @@ ul.errorlist{
 body {
 	font-family: Arial;
 }
+
 
 .signup-form {
 	display: flex;

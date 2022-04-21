@@ -20,13 +20,9 @@
 </head>
 
 <body>
-
     <h1 class="site-heading text-center text-white d-none d-lg-block">
         <span class="site-heading-lower">Documento de Soporte</span>
     </h1>
-
-    
-
 
  <!-- Navbar -->
  <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
@@ -46,15 +42,15 @@
           <li class="nav-item {% if request.path == '/' %}active{% endif %} px-lg-4">
             <a class="nav-link text-uppercase text-expanded" href="{% url 'Detalle_facturacion' %}"><h4>Facturas</h4></a>
           </li>
-          <li class="nav-item {% if request.path == '/' %}active{% endif %} px-lg-4">
-            <a class="nav-link text-uppercase text-expanded" href="{% url 'Detalle_facturacion' %}"><h4>Reportes</h4></a>
-          </li>
+
         </ul>
       </div>
     </div>
     <h4>{{ user.first_name }} {{ user.last_name }}</h4>
     <a href="{% url 'logout' %}" class="btn btn-outline-warning" role="button" aria-pressed="true" >Log Out</a>
   </nav>
+
+
 
 
 <!-- Contenido que cambia-->
