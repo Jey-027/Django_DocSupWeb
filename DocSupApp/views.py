@@ -1,3 +1,4 @@
+from .files import genera_archivo, genera_archivo_usd, genera_nc
 from .models import documento, proveedor, documento, properties
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,12 +10,13 @@ from django.contrib.auth import logout
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.contrib import messages
-from .forms import documentoForm
+from .forms import documentoForm, noFileForm, notaCredito
 from django.conf import settings
 from django.db.models import Q
 from datetime import datetime
 from openpyxl import Workbook
 import time
+
 # Create your views here.
 
 
@@ -45,16 +47,15 @@ class vendorList(LoginRequiredMixin,ListView):
     context_object_name = "proveedor_list"
     #paginate_by = 20
 
-    def buscar(request):
-        queryset = request.GET.get("Search")
-        # vendor = proveedor.objects.filter(estado = True)
-        print(queryset)
-        if queryset:
-            vendor = proveedor.objects.filter(
-                Q(name__icontains = queryset) |
-                Q(id_supplier__icontains = queryset)
-            ).distinct()
-        return render(request, 'proveedor_list.html', {'vendor': vendor})
+def search(request):
+    template_name = "DocSupApp/proveedor_list.html"
+    queryset = request.GET["Search"]
+    vendor = proveedor.objects.filter(name__icontains = queryset)
+    context = {
+        'vendor': vendor
+    }
+
+    return render(request, template_name, context)
 
 class VendorCreate(LoginRequiredMixin,CreateView):
     model = proveedor
@@ -74,13 +75,55 @@ class DetFactList(LoginRequiredMixin,ListView):
     model = documento
     context_object_name = "lista_de_Documentos"
 
+class detalle_documentos(LoginRequiredMixin, ListView):
+    model = documento
+    context_object_name = "lista_de_Documentos2"
+    template_name = "DocSupApp/notas_credito.html"
+
+
+def noSendFile(request, id):
+    doc2 = documento.objects.get(id = id)
+
+    if request.method == "GET":
+        form = noFileForm(instance=doc2)
+    else:
+        form = noFileForm(request.POST, instance=doc2)
+
+        if form.is_valid():
+            doc2.Date_process = datetime.now()
+            doc2.status = 2
+            doc2.user_process = str(request.user)
+            form.save()
+            messages.add_message(request=request, level=messages.SUCCESS, message="Documento no enviado, pero actualizado!")
+       
+        return redirect("Detalle_facturacion")
+    return render(request, "DocSupApp/generacion_documento.html", {"form": form})
+
+def genera_notaCredito(request,id):
+    doc3 = documento.objects.get(id = id)
+
+    if request.method == "GET":
+        form = notaCredito(instance=doc3)
+    else:
+        form = notaCredito(request.POST, instance=doc3)
+        
+        if form.is_valid():
+            doc3.genero_nota_credito = "True"
+            doc3.fecha_NC = datetime.now()
+            doc3.User_create_NC = str(request.user)
+            doc3.name_file_NC = doc3.num_documento + "-NC"
+            form.save()
+
+            genera_nc(id) 
+
+        return redirect("Doc_generadas")
+    return render(request, "DocSupApp/genera_notaCredito.html", {"form": form}) 
+
 
 def updateDocumento(request, id):
     doc = documento.objects.get(id = id)
-
     numRes = properties.objects.first()
-    name_file = numRes.path_file + numRes.name_file + str(numRes.Num_resolution) + ".txt"
-
+    # name_file = numRes.path_file + numRes.name_file + str(numRes.Num_resolution) + "pruebaIF.txt"
     if request.method == "GET":
         form = documentoForm(instance=doc)
     else:
@@ -92,41 +135,25 @@ def updateDocumento(request, id):
             doc.user_process = str(request.user)
             form.save()
             messages.add_message(request=request, level=messages.SUCCESS, message="Documento generado correctamente!")
-            
-            f = open("%s"%name_file ,"w+")
-            f.write("ENC,INVOIC,DIAN 2.1: documento soporte en adquisiciones efectuadas a no obligados a facturar.," + "%s"%numRes.prefijo_res + "%s"%numRes.Num_resolution  + "," + time.strftime('%Y-%m-%d,%H:%M:%S', time.localtime()) +"-05:00," + "05,COP,1," + "%s"%doc.payment_date + ",2,10,UBL 2.1\n")
-            f.write("CUD,\n")
-            f.write("EMI," + "%s"%doc.tipo_persona + ",," + "%s"%doc.city_id + "," +"%s"%doc.city_name + "," + "%s"%doc.city_id + "%s"%doc.est_fed_prov + "," + "%s"%doc.city_name + "," + "%s"%doc.est_fed_prov + "," + "%s"%doc.address + "," + "%s"%doc.country + ",Colombia,," + "%s"%doc.name_supplier_vendor + "," + "%s"%doc.Nit + ",," + "%s"%doc.type_of_tax_number + "\n") # informacion del proveedor
-            f.write("TAC,R-99-PN\n")
-            f.write("GTE,ZZ,IVA\n")   
-            f.write("ADQ,1,,,,,,,,,,860070698,1,31,Black & Decker de Colombia S.A.S\n") 
-            f.write("TCR,O-13\n")
-            f.write("GTA,01,IVA\n") 
-            f.write("TOT," + "%s"%doc.net_amount + ",COP," + "%s"%doc.net_amount  + ",COP," + "%s"%doc.net_amount  + ",COP," + "%s"%doc.net_amount  + ",COP,0.00,COP,0.00,COP,,,,\n")
-            f.write("TIM,true,0.00,COP\n")
-            f.write("IMP,01," + "%s"%doc.net_amount  + ",COP," + "%s"%doc.tax_amount + ",COP,0.00\n")	
-            f.write("DRF,"+ "%s"%numRes.autorization + "," + "%s"%numRes.start_date_res + "," + "%s"%numRes.end_date_res + "," + "%s"%numRes.prefijo_res + "," + "%s"%numRes.initial_range_res + "," + "%s"%numRes.end_range_res + "\n")
-            f.write("NOT,1_Responsable de impuesto sobre las ventas - IVA - Agentes Retenedores de IVA.\n")
-            f.write("MEP,1,2," +  "%s"%doc.payment_date + "\n") ## VALIDAR SI LA FECHA DE CREDITO DEBE INSERTAR EL USUARIO
-            f.write("ITE,1,1,94," + "%s"%doc.net_amount  + ",COP," + "%s"%doc.net_amount  + ",COP,," + "%s"%doc.item_description + ",1," + "%s"%doc.zSupplierID  + ",1,94,1," + "%s"%doc.net_amount + ",COP,,,,\n") # validar codigo vendedor
-            f.write("FCB," + "%s"%doc.date_Invoice + ",1,Por operación\n")
-            f.write("TII," + "%s"%doc.tax_amount + ",COP,false\n")
-            f.write("IIM,01," + "%s"%doc.tax_amount + ",COP," + "%s"%doc.net_amount + ",COP,0.00\n")
-            f.close()
 
+            if doc.type_of_tax_number == str(13):
+                genera_archivo(id)
+            else:
+                genera_archivo_usd(id)
+                
             if numRes.Num_resolution >= 5000030:
                 subject = "advertencia numero consecutivo doc soporte"
                 message = "este correo es para notificar que su numero de resolucion es " + str(numRes.Num_resolution) + "para que vaya solicitando su nuevo rango"
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list=["jdrodriguezg25@hotmail.com"]
                 send_mail(subject, message, email_from, recipient_list)
-
-
             numRes.Num_resolution += 1
             numRes.save()
 
         return redirect("Detalle_facturacion")
     return render(request, "DocSupApp/generacion_documento.html", {"form": form})
+
+
 
 
 class reporteExcelVendor(TemplateView):

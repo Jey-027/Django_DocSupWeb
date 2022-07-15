@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Notas Credito{% endblock %}
+
+{% block content %}
+
+    <div>
+        <h2>Documentos generados</h2>
+
+        <!-- esta seccion es para crear el boton de busqueda y el boton para agregar un nuevo proveedor-->
+
+        <nav class="navbar navbar-light bg-light">
+            <a href="{% url 'Reporte_Excel_vendor' %}" class="btn btn-outline-primary" role="button" aria-pressed="true" >Exportar a Excel</a>     
+            </form>
+
+        </nav>
+
+        <!-- se crea la tabla que muestra los proveedores  -->
+        <div>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">id supplier</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">COFP</th>
+                    <th scope="col">valor</th>
+                    <th scope="col">usuario</th>
+                    <th scope="col">N documento</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for doc in lista_de_Documentos2 %}
+                        {%if doc.status == '1' %}
+                <tr>
+                    <th>{{ doc.id }}</th>
+                    <th>{{ doc.id_supplier_vendor }}</th>
+                    <td>{{ doc.name_supplier_vendor }}</td>
+                    <td>{{ doc.id_supplier_invoice }}</td>
+                    <td>{{ doc.net_amount }}</td>
+                    <td>{{ doc.user_process }}</td>
+                    <td>{{ doc.num_documento }}</td>
+                    <td><a href="{% url 'Notas_credito' doc.id %}" class="btn btn-outline-dark" role="button" aria-pressed="true">Crear nota credito</a>
+                </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+{% endblock %}

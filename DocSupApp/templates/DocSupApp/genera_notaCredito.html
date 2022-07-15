@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Genera Documento{% endblock %}
+
+
+{% block content %}
+
+
+
+    <div>
+        <h1>Generacion de Nota Credito</h1>
+        <form method="post">
+            <div>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-outline-info btn-lg btn-block">Send</button> 
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

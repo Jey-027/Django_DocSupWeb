@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'Sup_doc',
         'USER': 'sa',
         'PASSWORD': 'A12345',
-        'HOST': 'DESKTOP-BQC1BCD',
+        'HOST': 'LT-PC1TT07A',
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',

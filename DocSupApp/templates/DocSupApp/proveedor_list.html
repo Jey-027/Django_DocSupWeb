@@ -15,13 +15,14 @@
             <a href="{% url 'Reporte_Excel_vendor' %}" class="btn btn-outline-primary" role="button" aria-pressed="true" >Exportar a Excel</a>
             <a href="{% url 'Vendor_create' %}" class="btn btn-outline-info" role="button" aria-pressed="true">➕</a>
 
-            <form method="get" class="form-inline">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="Search">
+            <form method="get" class="form-inline" action="{% url 'Search' %}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="Search">
                 <span class="input-group-list">
                     <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
                 </span>
                 
             </form>
+
         </nav>
 
         <!-- se crea la tabla que muestra los proveedores  -->

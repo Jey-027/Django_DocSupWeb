@@ -10,6 +10,7 @@ class proveedor(models.Model):
     city_name=models.CharField(max_length=40)
     email=models.CharField(max_length=50)
     nit=models.CharField(max_length=20)
+    dv=models.IntegerField(null=True)
     supplier_tax_description=models.CharField(max_length=70)
     Type_of_tax_number=models.CharField(max_length=70)
     address=models.CharField(max_length=100)
@@ -43,6 +44,7 @@ class documento(models.Model):
     city_name = models.CharField(max_length=40)
     email = models.CharField(max_length=50)
     Nit = models.CharField(max_length=20)
+    dv = models.IntegerField(null=True)
     type_of_tax_number = models.CharField(max_length=30)
     address = models.CharField(max_length=100)
     country = models.CharField(max_length=10)
@@ -74,7 +76,12 @@ class documento(models.Model):
     user_process = models.CharField(max_length=30, null=True)
     payment_date = models.DateField(null=True)
     num_documento = models.CharField(max_length=100, null=True)
-
+    genero_nota_credito = models.BooleanField(null=True)
+    fecha_NC = models.DateTimeField(null=True)
+    user_create_NC = models.CharField(max_length=10, null=True)
+    motivo = models.CharField(max_length=50, null=True)
+    name_file_NC = models.CharField(max_length=100, null=True)
+    
     # normal_pagination = True
     # values_for_page = 20
 
