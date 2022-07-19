@@ -9,6 +9,14 @@
     <div>
         <h2>Documentos generados</h2>
 
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
         <!-- esta seccion es para crear el boton de busqueda y el boton para agregar un nuevo proveedor-->
 
         <nav class="navbar navbar-light bg-light">

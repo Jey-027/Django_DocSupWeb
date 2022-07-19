@@ -19,7 +19,7 @@
               <table class="table">
                 <thead class="thead-dark">
                   <tr>
-                    <th><h3>Documentos sin procesar</h3></th>
+                    <th><h3>Doc. sin procesar</h3></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -36,12 +36,29 @@
               <table class="table">
                 <thead class="thead-dark">
                   <tr>
-                    <th><h3>Documentos generados</h3></th>
+                    <th><h3>Doc. generados</h3></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="table-info">
                     <td><h3>{{ documento1|length }}</h3></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <hr/>
+
+            <div>
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th><h3>NC generadas</h3></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-warning">
+                    <td><h3>{{ notas|length }}</h3></td>
                   </tr>
                 </tbody>
               </table>

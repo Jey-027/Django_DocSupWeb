@@ -15,7 +15,7 @@ from django.conf import settings
 from django.db.models import Q
 from datetime import datetime
 from openpyxl import Workbook
-import time
+# import time
 
 # Create your views here.
 
@@ -33,7 +33,7 @@ class homeView(LoginRequiredMixin, TemplateView):
         context["documento"] = documento.objects.all()
         context["documentoNull"] = documento.objects.filter(~Q(status=1))
         context["documento1"] = documento.objects.filter(status=1)
-        context["proveedor"] = proveedor.objects.all()
+        context["notas"] = documento.objects.filter(genero_nota_credito=1)
         return context
 
 
@@ -45,7 +45,11 @@ class SignUp(CreateView):
 class vendorList(LoginRequiredMixin,ListView):
     model = proveedor
     context_object_name = "proveedor_list"
-    #paginate_by = 20
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["proveedores"] = proveedor.objects.all()
+        return context
 
 def search(request):
     template_name = "DocSupApp/proveedor_list.html"
@@ -99,8 +103,10 @@ def noSendFile(request, id):
         return redirect("Detalle_facturacion")
     return render(request, "DocSupApp/generacion_documento.html", {"form": form})
 
+
 def genera_notaCredito(request,id):
     doc3 = documento.objects.get(id = id)
+    num_res = properties.objects.get(id = 2)
 
     if request.method == "GET":
         form = notaCredito(instance=doc3)
@@ -110,11 +116,15 @@ def genera_notaCredito(request,id):
         if form.is_valid():
             doc3.genero_nota_credito = "True"
             doc3.fecha_NC = datetime.now()
-            doc3.User_create_NC = str(request.user)
+            doc3.user_create_NC = str(request.user)
             doc3.name_file_NC = doc3.num_documento + "-NC"
             form.save()
 
-            genera_nc(id) 
+            genera_nc(id)
+
+        num_res.Num_resolution += 1
+        num_res.save()
+        messages.add_message(request=request, level=messages.SUCCESS, message="Nota credito creada correctamente!")
 
         return redirect("Doc_generadas")
     return render(request, "DocSupApp/genera_notaCredito.html", {"form": form}) 
@@ -136,7 +146,7 @@ def updateDocumento(request, id):
             form.save()
             messages.add_message(request=request, level=messages.SUCCESS, message="Documento generado correctamente!")
 
-            if doc.type_of_tax_number == str(13):
+            if doc.type_of_tax_number == '13':
                 genera_archivo(id)
             else:
                 genera_archivo_usd(id)

@@ -59,13 +59,12 @@ def genera_archivo_usd(id):
 
 def genera_nc(id):
     doc = documento.objects.get(id = id)
-    numRes = properties.objects.first()
+    numRes = properties.objects.get(id = 2)
     name_file = numRes.path_file  + doc.num_documento + "-NC.txt"
     fecha_anulacion = str(doc.Date_process)
 
     f = open("%s"%name_file ,"w+")
-    f.write("ENC,NC,DIAN 2.1: Nota de ajuste al documento soporte en adquisiciones efectuadas a sujetos no obligados a expedir factura o documento equivalente.," + "%s"%numRes.prefijo_res + "%s"%numRes.Num_resolution  + "," + time.strftime('%Y-%m-%d,%H:%M:%S', time.localtime()) +"-05:00," + "95,COP,1," + "%s"%doc.payment_date + ",2,10,UBL 2.1\n")
-    f.write("CUD,\n")
+    f.write("ENC,NC,DIAN 2.1: Nota de ajuste al documento soporte en adquisiciones efectuadas a sujetos no obligados a expedir factura o documento equivalente," + "%s"%numRes.prefijo_res + "%s"%numRes.Num_resolution  + "," + time.strftime('%Y-%m-%d,%H:%M:%S', time.localtime()) +"-05:00," + "95,COP,1," + "%s"%doc.payment_date + ",2,10,UBL 2.1\n")
     f.write("EMI," + "%s"%doc.tipo_persona + ",," + "%s"%doc.city_id + "," +"%s"%doc.city_name.capitalize() + "," + "%s"%doc.city_id  + "," + "%s"%doc.name_est_fed_prov.capitalize() + "," + "%s"%doc.est_fed_prov + "," + "%s"%doc.address + "," + "%s"%doc.country + ",Colombia,," + "%s"%doc.name_supplier_vendor + "," + "%s"%doc.Nit + "," + "%s"%doc.dv  + ",31\n") # informacion del proveedor
     f.write("TAC,R-99-PN\n")
     f.write("GTE,ZZ,No aplica\n")   
@@ -84,8 +83,8 @@ def genera_nc(id):
     f.write("TII," + "%s"%doc.tax_amount.replace('.','').replace(',','.') + ",COP,false\n")
     f.write("IIM,01," + "%s"%doc.tax_amount.replace('.','').replace(',','.') + ",COP," + "%s"%doc.net_amount.replace('.','').replace(',','.') + ",COP,0.00\n")
     f.write("REF,SETT" + "%s"%doc.num_documento.replace('Documento-','') + ",," + "%s"%fecha_anulacion[:10] + "\n")  # fecha del documento a anular
-    f.write("CDN,SETT" + "%s"%doc.num_documento.replace('Documento-','') + ",5,Anulacion\n") 
+    f.write("CDN,,5,Otros\n") 
     f.write("ORP,SETT" + "%s"%doc.num_documento.replace('Documento-','') + "\n")
-
     f.close()
+
 
