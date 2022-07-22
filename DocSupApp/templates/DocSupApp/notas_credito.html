@@ -41,7 +41,7 @@
                 </thead>
                 <tbody>
                     {% for doc in lista_de_Documentos2 %}
-                        {%if doc.status == '1' %}
+                        {%if doc.status == '1' and doc.genero_nota_credito is null %}
                 <tr>
                     <th>{{ doc.id }}</th>
                     <th>{{ doc.id_supplier_vendor }}</th>

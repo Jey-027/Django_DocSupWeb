@@ -24,7 +24,7 @@ def genera_archivo(id):
     f.write("NOT,1_Responsable de impuesto sobre las ventas - IVA - Agentes Retenedores de IVA.\n")
     f.write("MEP,1,2," +  "%s"%doc.payment_date + "\n") ## VALIDAR SI LA FECHA DE CREDITO DEBE INSERTAR EL USUARIO
     f.write("ITE,1,1,94," + "%s"%doc.net_amount.replace('.','').replace(',','.')  + ",COP," + "%s"%doc.net_amount.replace('.','').replace(',','.')  + ",COP,," + "%s"%doc.item_description + ",1," + "%s"%doc.zSupplierID  + ",1,94,1," + "%s"%doc.net_amount.replace('.','').replace(',','.') + ",COP,,,,\n") # validar codigo vendedor
-    f.write("FCB," + "%s"%doc.date_Invoice + ",1,Por operación\n")
+    f.write("FCB," + "%s"%doc.date_Invoice + ",2,Acumulado semanal\n")
     f.write("TII," + "%s"%doc.tax_amount.replace('.','').replace(',','.') + ",COP,false\n")
     f.write("IIM,01," + "%s"%doc.tax_amount.replace('.','').replace(',','.') + ",COP," + "%s"%doc.net_amount.replace('.','').replace(',','.') + ",COP,0.00\n")
     f.close()
@@ -33,7 +33,7 @@ def genera_archivo(id):
 def genera_archivo_usd(id):
     doc = documento.objects.get(id = id)
     numRes = properties.objects.first()
-    name_file = numRes.path_file + numRes.name_file + str(numRes.Num_resolution) + "-prueba.txt"
+    name_file = numRes.path_file + numRes.name_file + str(numRes.Num_resolution) + ".txt"
 
     f = open("%s"%name_file ,"w+")
     f.write("ENC,INVOIC,DIAN 2.1: documento soporte en adquisiciones efectuadas a no obligados a facturar.," + "%s"%numRes.prefijo_res + "%s"%numRes.Num_resolution  + "," + time.strftime('%Y-%m-%d,%H:%M:%S', time.localtime()) +"-05:00," + "05,USD,1," + "%s"%doc.payment_date + ",2,11,UBL 2.1\n")
@@ -46,14 +46,23 @@ def genera_archivo_usd(id):
     f.write("TOT," + "%s"%doc.net_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.net_amount.replace('.','').replace(',','.').replace(' USD','')  + ",USD," + "%s"%doc.gross_amount.replace('.','').replace(',','.').replace(' USD','')  + ",USD," + "%s"%doc.gross_amount.replace('.','').replace(',','.').replace(' USD','')  + ",USD,0.00,USD,0.00,USD,,,,\n")
     f.write("TIM,false," + "%s"%doc.tax_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD\n")
     f.write("IMP,01," + "%s"%doc.net_amount.replace('.','').replace(',','.').replace(' USD','')  + ",USD," + "%s"%doc.tax_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD,19.00\n")	
+    f.write("TIM,true," + "%s"%doc.tax_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD\n")
+    f.write("IMP,05," + "%s"%doc.tax_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.amount_IVA.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.percent_IVA.replace('.','').replace(',','.').replace(' USD','') + "\n")
+    f.write("TIM,true," + "%s"%doc.amount_RTE.replace('.','').replace(',','.').replace(' USD','') + ",USD\n")
+    f.write("IMP,06," + "%s"%doc.net_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.amount_RTE.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.percent_RTE.replace('.','').replace(',','.').replace(' USD','') + "\n")
     f.write("TDC,USD,COP," + "4500," + "2022-07-14," + "1.00,1.00\n")
     f.write("DRF,"+ "%s"%numRes.autorization + "," + "%s"%numRes.start_date_res + "," + "%s"%numRes.end_date_res + "," + "%s"%numRes.prefijo_res + "," + "%s"%numRes.initial_range_res + "," + "%s"%numRes.end_range_res + "\n")
     f.write("NOT,1_Responsable de impuesto sobre las ventas - IVA - Agentes Retenedores de IVA.\n")
     f.write("MEP,1,2," +  "%s"%doc.payment_date + "\n") ## VALIDAR SI LA FECHA DE CREDITO DEBE INSERTAR EL USUARIO
     f.write("ITE,1,1,94," + "%s"%doc.net_amount.replace('.','').replace(',','.').replace(' USD','')  + ",USD," + "%s"%doc.net_amount.replace('.','').replace(',','.').replace(' USD','')  + ",USD,," + "%s"%doc.item_description + ",1," + "%s"%doc.zSupplierID  + ",1,94,1," + "%s"%doc.net_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD,,,,\n") # validar codigo vendedor
-    f.write("FCB," + "%s"%doc.date_Invoice + ",1,Por operación\n")
+    f.write("FCB," + "%s"%doc.date_Invoice + ",2,Acumulado semanal\n")
     f.write("TII," + "%s"%doc.tax_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD,false\n")
     f.write("IIM,01," + "%s"%doc.tax_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.net_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD,19.00\n")
+    f.write("TII,"+ "%s"%doc.amount_IVA.replace('.','').replace(',','.').replace(' USD','') + ",USD,true\n")
+    f.write("IIM,05," + "%s"%doc.tax_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.amount_IVA.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.percent_IVA.replace('.','').replace(',','.').replace(' USD','')  +"\n")
+    f.write("TII,"+ "%s"%doc.amount_RTE.replace('.','').replace(',','.').replace(' USD','') + ",USD,true\n")
+    f.write("IIM,06," + "%s"%doc.amount_RTE.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.net_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.percent_RTE.replace('.','').replace(',','.').replace(' USD','')  +"\n")
+
     f.close()
 
 
