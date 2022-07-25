@@ -10,7 +10,7 @@ from django.contrib.auth import logout
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from django.contrib import messages
-from .forms import documentoForm, noFileForm, notaCredito
+from .forms import documentoForm, noFileForm, notaCredito, documentFormUsd
 from django.conf import settings
 from django.db.models import Q
 from datetime import datetime
@@ -133,32 +133,57 @@ def genera_notaCredito(request,id):
 def updateDocumento(request, id):
     doc = documento.objects.get(id = id)
     numRes = properties.objects.first()
-    # name_file = numRes.path_file + numRes.name_file + str(numRes.Num_resolution) + "pruebaIF.txt"
-    if request.method == "GET":
+
+    if request.method == "GET" and doc.type_of_tax_number != '13':
+        form = documentFormUsd(instance=doc)
+    elif request.method == "GET" and doc.type_of_tax_number == '13':
         form = documentoForm(instance=doc)
     else:
-        form = documentoForm(request.POST, instance=doc)
-        if form.is_valid():
-            doc.num_documento = numRes.name_file + str(numRes.Num_resolution)
-            doc.Date_process = datetime.now()
-            doc.status = 1
-            doc.user_process = str(request.user)
-            form.save()
-            messages.add_message(request=request, level=messages.SUCCESS, message="Documento generado correctamente!")
+        if doc.type_of_tax_number == '13':
+            form = documentoForm(request.POST, instance=doc)
+            if form.is_valid():
+                doc.num_documento = numRes.name_file + str(numRes.Num_resolution)
+                doc.Date_process = datetime.now()
+                doc.status = 1
+                doc.user_process = str(request.user)
+                form.save()
 
+        else:
+            form = documentFormUsd(request.POST, instance=doc)
+            if form.is_valid():
+                doc.num_documento = numRes.name_file + str(numRes.Num_resolution)
+                doc.Date_process = datetime.now()
+                doc.status = 1
+                doc.user_process = str(request.user)
+                # form.save()
+
+        try:
             if doc.type_of_tax_number == '13':
                 genera_archivo(id)
+                form.save()
+                numRes.Num_resolution += 1
+                numRes.save()
+                messages.add_message(request=request, level=messages.SUCCESS, message="Documento generado correctamente!")
             else:
                 genera_archivo_usd(id)
-                
-            if numRes.Num_resolution >= 5000030:
-                subject = "advertencia numero consecutivo doc soporte"
-                message = "este correo es para notificar que su numero de resolucion es " + str(numRes.Num_resolution) + "para que vaya solicitando su nuevo rango"
-                email_from = settings.EMAIL_HOST_USER
-                recipient_list=["jdrodriguezg25@hotmail.com"]
-                send_mail(subject, message, email_from, recipient_list)
-            numRes.Num_resolution += 1
-            numRes.save()
+                form.save()
+                numRes.Num_resolution += 1
+                numRes.save()
+                messages.add_message(request=request, level=messages.SUCCESS, message="Documento generado correctamente!")
+        except:
+            doc.status = 'NULL'
+            form.save()
+        messages.add_message(request=request, level=messages.ERROR, message="Documento no generado!")
+
+
+        if numRes.Num_resolution >= 5000030:
+            subject = "advertencia numero consecutivo doc soporte"
+            message = "este correo es para notificar que su numero de resolucion es " + str(numRes.Num_resolution) + "para que vaya solicitando su nuevo rango"
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list=["jdrodriguezg25@hotmail.com"]
+            send_mail(subject, message, email_from, recipient_list)
+
+            
 
         return redirect("Detalle_facturacion")
     return render(request, "DocSupApp/generacion_documento.html", {"form": form})

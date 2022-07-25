@@ -70,6 +70,8 @@ class documento(models.Model):
     amount_ICA = models.CharField(max_length=20)
     Value_RTE = models.CharField(max_length=30)
     total_retenciones = models.CharField(max_length=30)
+    tasa_cambio = models.CharField(max_length=10, null=True)
+    fecha_tasa_cambio = models.DateField(null=True)
     tipo_persona = models.TextField(null=True, choices=personType_choices)
     status = models.TextField(null=True)  
     Date_process = models.DateTimeField(null=True)

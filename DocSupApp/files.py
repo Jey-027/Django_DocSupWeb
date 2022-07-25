@@ -50,7 +50,7 @@ def genera_archivo_usd(id):
     f.write("IMP,05," + "%s"%doc.tax_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.amount_IVA.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.percent_IVA.replace('.','').replace(',','.').replace(' USD','') + "\n")
     f.write("TIM,true," + "%s"%doc.amount_RTE.replace('.','').replace(',','.').replace(' USD','') + ",USD\n")
     f.write("IMP,06," + "%s"%doc.net_amount.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.amount_RTE.replace('.','').replace(',','.').replace(' USD','') + ",USD," + "%s"%doc.percent_RTE.replace('.','').replace(',','.').replace(' USD','') + "\n")
-    f.write("TDC,USD,COP," + "4500," + "2022-07-14," + "1.00,1.00\n")
+    f.write("TDC,USD,COP," + "%s"%doc.tasa_cambio + "," + "%s"%doc.fecha_tasa_cambio + ",1.00,1.00\n")
     f.write("DRF,"+ "%s"%numRes.autorization + "," + "%s"%numRes.start_date_res + "," + "%s"%numRes.end_date_res + "," + "%s"%numRes.prefijo_res + "," + "%s"%numRes.initial_range_res + "," + "%s"%numRes.end_range_res + "\n")
     f.write("NOT,1_Responsable de impuesto sobre las ventas - IVA - Agentes Retenedores de IVA.\n")
     f.write("MEP,1,2," +  "%s"%doc.payment_date + "\n") ## VALIDAR SI LA FECHA DE CREDITO DEBE INSERTAR EL USUARIO
